@@ -11,9 +11,23 @@
   <parent>
     <groupId>com.tourscool</groupId>
     <artifactId>parent</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <relativePath>../xf/parent</relativePath>
+    <version>1.0.0</version>
   </parent>
+
+  <repositories>
+    <repository>
+      <id>tourcool</id>
+      <name>tourscool</name>
+      <url>http://nexus.tourscool.cn/repository/tourscool/</url>
+      <layout>default</layout>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
+  </repositories>
 
   <build>
     <plugins>

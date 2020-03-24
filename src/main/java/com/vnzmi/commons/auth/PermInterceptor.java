@@ -17,7 +17,7 @@ public class PermInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         Auth.getInstance().setAdminId(new Double(Math.random() * 1000).longValue());
         HandlerMethod handlerMethod = (HandlerMethod) handler;
-        Perm perm = handlerMethod.getMethodAnnotation(Perm.class);
+        Authorize perm = handlerMethod.getMethodAnnotation(Authorize.class);
 
         if(perm == null)
         {

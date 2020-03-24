@@ -1,15 +1,14 @@
 package com.vnzmi.commons.auth;
 
+/**
+ * 后台权限验证
+ */
 
 import java.lang.annotation.*;
 
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface Perm {
-    /**
-     * 单个权限
-     * @return
-     */
+public @interface Authorize {
     String[] value() default {};
 }

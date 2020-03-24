@@ -2,7 +2,6 @@ package com.vnzmi.commons.rest;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.github.pagehelper.PageInfo;
 import org.springframework.data.domain.Page;
 
 import java.util.ArrayList;
@@ -12,30 +11,20 @@ import java.util.List;
 
 public class PageResponse {
     private PageMeta pagination = new PageMeta();
-    private List<Object> items ;
+    private List<Object> items;
 
     @JsonIgnore
     private PageItemProcessor processor = null;
 
-    public  PageResponse (Page page)
-    {
+    public PageResponse(Page page) {
         init(page);
     }
 
-    public  PageResponse (PageInfo page)
-    {
-        initPageInfo(page);
-    }
-
-    public  PageResponse(Page page, PageItemProcessor processor){
+    public PageResponse(Page page, PageItemProcessor processor) {
         this.processor = processor;
         init(page);
     }
 
-    public  PageResponse(PageInfo page, PageItemProcessor processor){
-        this.processor = processor;
-        initPageInfo(page);
-    }
 
     public PageMeta getPagination() {
         return pagination;
@@ -61,7 +50,7 @@ public class PageResponse {
         this.processor = processor;
     }
 
-    private void initPageInfo(PageInfo page)
+   /* private void initPageInfo(PageInfo page)
     {
         if(page.getTotal() == 0)
         {
@@ -86,14 +75,12 @@ public class PageResponse {
                 this.setItems(page.getList());
             }
         }
-    }
+    }*/
 
-    private void init(Page page)
-    {
-        if(page.isEmpty())
-        {
+    private void init(Page page) {
+        if (page.isEmpty()) {
             setItems(Collections.EMPTY_LIST);
-        }else{
+        } else {
             PageMeta pm = new PageMeta();
             pm.setCurrentPage(page.getNumber());
             pm.setPageSize(page.getSize());
@@ -101,40 +88,28 @@ public class PageResponse {
             pm.setTotal(page.getTotalElements());
             this.setPagination(pm);
 
-            if(processor != null)
-            {
+            if (processor != null) {
                 Iterator data = page.getContent().iterator();
-                Object object ;
+                Object object;
                 List<Object> list = new ArrayList<>();
-                while (data.hasNext())
-                {
+                while (data.hasNext()) {
                     object = data.next();
                     list.add(processor.process(object));
                 }
                 setItems(list);
-            }else{
-                this.setItems((List<Object>)page.getContent());
+            } else {
+                this.setItems((List<Object>) page.getContent());
             }
         }
     }
 
-    public  static PageResponse create(Page<?> page)
-    {
+    public static PageResponse create(Page<?> page) {
         return new PageResponse(page);
     }
 
-    public  static PageResponse create(PageInfo<?> page)
-    {
-        return new PageResponse(page);
+
+    public static PageResponse create(Page<?> page, PageItemProcessor processor) {
+        return new PageResponse(page, processor);
     }
 
-    public  static PageResponse create(Page<?> page,PageItemProcessor processor)
-    {
-        return new PageResponse(page,processor);
-    }
-
-    public  static PageResponse create(PageInfo<?> page,PageItemProcessor processor)
-    {
-        return new PageResponse(page,processor);
-    }
 }
