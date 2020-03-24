@@ -18,4 +18,7 @@ public class PageMeta {
         @JsonProperty(value = "page_size")
         private int pageSize = 20;
 
+        @JsonProperty("more")
+        private boolean more = false;
+
 }

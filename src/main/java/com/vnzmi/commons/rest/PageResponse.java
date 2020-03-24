@@ -2,6 +2,7 @@ package com.vnzmi.commons.rest;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.github.pagehelper.PageInfo;
 import org.springframework.data.domain.Page;
 
 import java.util.ArrayList;
@@ -21,9 +22,19 @@ public class PageResponse {
         init(page);
     }
 
+    public  PageResponse (PageInfo page)
+    {
+        initPageInfo(page);
+    }
+
     public  PageResponse(Page page, PageItemProcessor processor){
         this.processor = processor;
         init(page);
+    }
+
+    public  PageResponse(PageInfo page, PageItemProcessor processor){
+        this.processor = processor;
+        initPageInfo(page);
     }
 
     public PageMeta getPagination() {
@@ -48,6 +59,33 @@ public class PageResponse {
 
     public void setProcessor(PageItemProcessor processor) {
         this.processor = processor;
+    }
+
+    private void initPageInfo(PageInfo page)
+    {
+        if(page.getTotal() == 0)
+        {
+            setItems(Collections.EMPTY_LIST);
+        }else{
+            PageMeta pm = new PageMeta();
+            pm.setCurrentPage(page.getPageNum());
+            pm.setPageSize(page.getSize());
+            pm.setTotalPage(page.getPages());
+            pm.setTotal(page.getTotal());
+            this.setPagination(pm);
+            if(processor != null)
+            {
+                List data = page.getList();
+                Object object ;
+                List<Object> list = new ArrayList<>();
+                data.forEach(e -> {
+                    list.add(processor.process(e));
+                });
+                setItems(list);
+            }else{
+                this.setItems(page.getList());
+            }
+        }
     }
 
     private void init(Page page)
@@ -85,7 +123,17 @@ public class PageResponse {
         return new PageResponse(page);
     }
 
+    public  static PageResponse create(PageInfo<?> page)
+    {
+        return new PageResponse(page);
+    }
+
     public  static PageResponse create(Page<?> page,PageItemProcessor processor)
+    {
+        return new PageResponse(page,processor);
+    }
+
+    public  static PageResponse create(PageInfo<?> page,PageItemProcessor processor)
     {
         return new PageResponse(page,processor);
     }
