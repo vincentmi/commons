@@ -1,8 +1,11 @@
 package com.vnzmi.commons.setup;
 
 import com.vnzmi.commons.exception.BusinessException;
+import com.vnzmi.commons.exception.ErrorCode;
 import com.vnzmi.commons.exception.ValidationException;
 import com.vnzmi.commons.rest.ApiResponse;
+import feign.FeignException;
+import feign.codec.DecodeException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,18 +46,47 @@ public class AppRestExceptionHandler extends ResponseEntityExceptionHandler {
         return ApiResponse.build(e.getCode(), e.getMessage(), e.getData());
     }
 
+    @ExceptionHandler(DecodeException.class)
+    @ResponseBody
+    public ApiResponse decoderException(HttpServletRequest req, DecodeException e) {
+        Throwable src = e.getCause();
+        if(src instanceof BusinessException){
+            return businessException(req,(BusinessException) src);
+        }else{
+            return defaultException(req,e);
+        }
+    }
+
+    @ExceptionHandler(FeignException.class)
+    @ResponseBody
+    public ApiResponse decoderException(HttpServletRequest req, FeignException e) {
+
+        return ApiResponse.build(e.status(),e.getMessage(),e.contentUTF8());
+    }
+
+
+
     @ExceptionHandler(Exception.class)
     @ResponseBody
     public ApiResponse defaultException(HttpServletRequest req, Exception e) {
         logException(e);
-        return ApiResponse.build(1, e.getMessage(), null);
+        if(e instanceof  ValidationException){
+            //validation exception
+            return validatingException(req,(ValidationException) e);
+        }else if(e instanceof BusinessException){
+            //business exception
+            return businessException(req,(BusinessException)e);
+        }else {
+            // exception
+            return ApiResponse.build(1, e.getMessage(), null);
+        }
     }
 
     @ExceptionHandler(EntityNotFoundException.class)
     @ResponseBody
     public ApiResponse entityNotFound(HttpServletRequest req, EntityNotFoundException e) {
         logException(e);
-        return ApiResponse.build(600404, "找不到你要操作的数据", null);
+        return ApiResponse.build(ErrorCode.ENTITY_NOT_FOUND, ErrorCode.ENTITY_NOT_FOUND_MESSAGE, null);
     }
 
 

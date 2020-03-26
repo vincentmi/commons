@@ -3,7 +3,7 @@ package com.vnzmi.commons.rest;
 
 public class  ApiResponse {
     public static int  SUCCESS = 0;
-    public static String SUCCESS_MSG="ok";
+    public static String SUCCESS_MESSAGE="ok";
 
     private int code  = 0;
     private String msg = "ok";
@@ -40,7 +40,7 @@ public class  ApiResponse {
     {
         ApiResponse response = new ApiResponse();
         response.setCode(SUCCESS);
-        response.setMsg(SUCCESS_MSG);
+        response.setMsg(SUCCESS_MESSAGE);
         response.setData(data);
         return response;
     }

@@ -9,14 +9,10 @@ import java.util.List;
 
 public class ValidationException extends BusinessException {
 
-    public static int VALIDATE_ERROR_CODE=600400;
-    public static String VALIDATE_ERROR_MSG="数据验证失败.请检查数据";
-
-
     public ValidationException()
     {
-        setCode(VALIDATE_ERROR_CODE);
-        setMessage(VALIDATE_ERROR_MSG);
+        setCode(ErrorCode.VALIDATE_FAIL);
+        setMessage(ErrorCode.VALIDATE_FAIL_MESSAGE);
         setData(new Hashtable<String,String>());
     }
 

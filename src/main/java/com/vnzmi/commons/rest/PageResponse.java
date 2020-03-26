@@ -86,6 +86,7 @@ public class PageResponse {
             pm.setPageSize(page.getSize());
             pm.setTotalPage(page.getTotalPages());
             pm.setTotal(page.getTotalElements());
+            pm.setMore(page.getNumber() < page.getTotalPages());
             this.setPagination(pm);
 
             if (processor != null) {

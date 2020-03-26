@@ -1,15 +1,16 @@
 package com.vnzmi.commons.exception;
 
 public class BusinessException extends RuntimeException {
-    protected int code = 600100;
+    protected int code;
     protected Object data;
-    protected String message = "business error";
+    protected String message;
 
     public BusinessException() {
+        this(ErrorCode.BUSINESS_ERROR, ErrorCode.BUSINESS_ERROR_MESSAGE, null);
     }
 
     public BusinessException(String msg) {
-        this(600100, msg, null);
+        this(ErrorCode.BUSINESS_ERROR, msg, null);
     }
 
     public BusinessException(int code, String msg) {
@@ -24,14 +25,12 @@ public class BusinessException extends RuntimeException {
         setData(data);
     }
 
-    public void setMessage(String message)
-    {
+    public void setMessage(String message) {
         this.message = message;
     }
 
     @Override
-    public String getMessage()
-    {
+    public String getMessage() {
         return this.message;
     }
 

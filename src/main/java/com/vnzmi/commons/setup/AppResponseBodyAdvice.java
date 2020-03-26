@@ -44,6 +44,7 @@ public class AppResponseBodyAdvice implements ResponseBodyAdvice {
         } else if (o.getClass().equals(ApiResponse.class)) {
             response = (ApiResponse) o;
         } else if (o.getClass().equals(String.class)) {
+            //String 特殊处理
             response = ApiResponse.build(o);
             ObjectMapper mapper = new ObjectMapper();
             serverHttpResponse.getHeaders().add("Content-Type","text/json");
