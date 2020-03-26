@@ -4,17 +4,29 @@
   <groupId>com.vnzmi.commons</groupId>
   <artifactId>micro-service-utils</artifactId>
   <packaging>jar</packaging>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.0.1</version>
   <name>micro-service-utils</name>
   <url>http://vnzmi.com</url>
 
   <parent>
     <groupId>com.tourscool</groupId>
     <artifactId>parent</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
   </parent>
 
   <repositories>
+    <repository>
+      <id>alimaven</id>
+      <name>aliyun maven</name>
+      <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+
     <repository>
       <id>tourcool</id>
       <name>tourscool</name>
