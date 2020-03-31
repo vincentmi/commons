@@ -122,7 +122,7 @@ public class AppRestExceptionHandler extends ResponseEntityExceptionHandler {
 
     protected void logException(Exception e) {
 
-        logger.error(e.toString(), e);
+        logger.info(e.toString(), e);
     }
 
 }

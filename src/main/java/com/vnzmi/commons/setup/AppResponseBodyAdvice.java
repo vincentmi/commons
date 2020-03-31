@@ -47,7 +47,7 @@ public class AppResponseBodyAdvice implements ResponseBodyAdvice {
             //String 特殊处理
             response = ApiResponse.build(o);
             ObjectMapper mapper = new ObjectMapper();
-            serverHttpResponse.getHeaders().add("Content-Type","text/json");
+            serverHttpResponse.getHeaders().add("Content-Type","text/json;charset=utf-8");
             try {
                 return mapper.writeValueAsString(response);
             } catch (JsonProcessingException e) {

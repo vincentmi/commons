@@ -20,6 +20,8 @@ public class AppFeignDecoder implements Decoder {
     public Object decode(Response response, Type type) throws IOException, DecodeException, FeignException {
         String bodyText = Util.toString(response.body().asReader(StandardCharsets.UTF_8));
 
+        LoggerFactory.getLogger(getClass()).debug(bodyText);
+
         LoggerFactory.getLogger(this.getClass()).info(bodyText);
 
         ObjectMapper mapper = new ObjectMapper();

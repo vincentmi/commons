@@ -4,15 +4,16 @@
   <groupId>com.vnzmi.commons</groupId>
   <artifactId>micro-service-utils</artifactId>
   <packaging>jar</packaging>
-  <version>1.0.4</version>
+  <version>1.0.8</version>
   <name>micro-service-utils</name>
   <url>http://vnzmi.com</url>
 
   <parent>
       <groupId>com.tourscool</groupId>
       <artifactId>parent</artifactId>
-      <version>1.0.2</version>
+      <version>1.0.7</version>
   </parent>
+
 
   <repositories>
     <repository>
@@ -22,10 +23,13 @@
       <layout>default</layout>
       <releases>
         <enabled>true</enabled>
+        <updatePolicy>always</updatePolicy>
       </releases>
       <snapshots>
         <enabled>true</enabled>
+        <updatePolicy>always</updatePolicy>
       </snapshots>
+
     </repository>
   </repositories>
 
