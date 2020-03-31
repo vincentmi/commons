@@ -11,4 +11,10 @@ import java.lang.annotation.*;
 @Documented
 public @interface Authorize {
     String[] value() default {};
+
+    /**
+     * 是否抛出权限检查错误
+     * @return
+     */
+    boolean silence() default false;
 }

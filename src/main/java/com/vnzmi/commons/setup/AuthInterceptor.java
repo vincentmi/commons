@@ -33,7 +33,6 @@ public class AuthInterceptor implements HandlerInterceptor {
         remoteService = factory.getBean(RemoteService.class);
         commonConfig = factory.getBean(CommonConfig.class);
 
-
         HandlerMethod handlerMethod = (HandlerMethod) handler;
         String token = getToken(request);
         return checkAuthorize(token,handlerMethod) && checkPassport(token,handlerMethod);
@@ -75,6 +74,7 @@ public class AuthInterceptor implements HandlerInterceptor {
             return true;
         }else{
             String[] requiredPerms  = annotation.value();
+            boolean silence = annotation.silence();
             PermInfo permInfo = remoteService.authorizeVerifyAndGet(token);
             System.out.println(permInfo.toString());
             Auth.getInstance().setPermInfo(permInfo);
@@ -82,8 +82,10 @@ public class AuthInterceptor implements HandlerInterceptor {
                 if(Auth.id() > 0 )
                 {
                     return true;
+                }else if(silence) {
+                    return true;
                 }else{
-                    throw AuthorizeException.loginRequired();
+                    throw  AuthorizeException.loginRequired();
                 }
             }else{
                 boolean permCheckResult = true;
@@ -96,6 +98,8 @@ public class AuthInterceptor implements HandlerInterceptor {
                     }
                 }
                 if(permCheckResult){
+                    return true;
+                }else if(silence) {
                     return true;
                 }else{
                     throw AuthorizeException.accessDeny();
@@ -113,11 +117,14 @@ public class AuthInterceptor implements HandlerInterceptor {
             return true;
         }else{
             String[] requiredPerms  = annotation.value();
+            boolean silence = annotation.silence();
             PermInfo permInfo = remoteService.passportVerifyAndGet(token);
             Auth.getInstance().setPermInfo(permInfo);
             if(requiredPerms.length == 0){
                 if(Auth.id() > 0 )
                 {
+                    return true;
+                }else if(silence) {
                     return true;
                 }else{
                     throw AuthorizeException.loginRequired();
@@ -134,6 +141,8 @@ public class AuthInterceptor implements HandlerInterceptor {
                 }
                 if(permCheckResult){
                     return true;
+                }else if(silence){
+                   return true;
                 }else{
                     throw AuthorizeException.accessDeny();
                 }

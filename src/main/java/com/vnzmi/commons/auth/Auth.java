@@ -7,7 +7,7 @@ public class Auth {
 
     private static Auth instance;
 
-    private long userId = -1;
+    private long userId = 0;
     private String name = "Guest";
     private String publicName = "Guest";
     private HashSet<String> roles = new HashSet<>();

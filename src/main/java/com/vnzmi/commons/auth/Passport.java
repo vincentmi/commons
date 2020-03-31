@@ -11,4 +11,9 @@ import java.lang.annotation.*;
 @Documented
 public @interface Passport {
     String[] value() default {};
+    /**
+     * 是否抛出权限检查错误
+     * @return
+     */
+    boolean silence() default false;
 }
