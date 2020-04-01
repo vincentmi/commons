@@ -71,82 +71,78 @@ public class AuthInterceptor implements HandlerInterceptor {
         Authorize annotation = handlerMethod.getMethodAnnotation(Authorize.class);
         if(annotation == null)
         {
+            return true;//NO Perm Check
+        }
+
+        String[] requiredPerms  = annotation.value();
+        boolean silence = annotation.silence();
+
+        if(token == null || token.length() < 7) {
+            if(silence) {
+                Auth.getInstance().setPermInfo(new PermInfo());//No Token in silence mode assign a guest
+                return true;
+            }else {
+                throw  AuthorizeException.loginRequired();
+            }
+        }
+
+        PermInfo permInfo = remoteService.authorizeVerifyAndGet(token);
+        Auth.getInstance().setPermInfo(permInfo);
+
+        boolean permCheckResult = true;
+        for(int i=0;i<requiredPerms.length;i++)
+        {
+            if(!Auth.getInstance().hasPerm(requiredPerms[i]))
+            {
+                permCheckResult = false;
+                break;
+            }
+        }
+
+        if(permCheckResult){
             return true;
         }else{
-            String[] requiredPerms  = annotation.value();
-            boolean silence = annotation.silence();
-            PermInfo permInfo = remoteService.authorizeVerifyAndGet(token);
-            System.out.println(permInfo.toString());
-            Auth.getInstance().setPermInfo(permInfo);
-            if(requiredPerms.length == 0){
-                if(Auth.id() > 0 )
-                {
-                    return true;
-                }else if(silence) {
-                    return true;
-                }else{
-                    throw  AuthorizeException.loginRequired();
-                }
-            }else{
-                boolean permCheckResult = true;
-                for(int i=0;i<requiredPerms.length;i++)
-                {
-                    if(!Auth.getInstance().hasPerm(requiredPerms[i]))
-                    {
-                        permCheckResult = false;
-                        break;
-                    }
-                }
-                if(permCheckResult){
-                    return true;
-                }else if(silence) {
-                    return true;
-                }else{
-                    throw AuthorizeException.accessDeny();
-                }
-            }
+            throw AuthorizeException.accessDeny();
         }
     }
 
     protected boolean checkPassport(String token, HandlerMethod handlerMethod)
     {
-
         Passport annotation = handlerMethod.getMethodAnnotation(Passport.class);
         if(annotation == null)
         {
+            return true;//NO Perm Check
+        }
+
+        String[] requiredPerms  = annotation.value();
+        boolean silence = annotation.silence();
+
+        if(token == null || token.length() < 7) {
+            if(silence) {
+                Auth.getInstance().setPermInfo(new PermInfo());//No Token in silence mode assign a guest
+                return true;
+            }else {
+                throw  AuthorizeException.loginRequired();
+            }
+        }
+
+        PermInfo permInfo = remoteService.passportVerifyAndGet(token);
+        Auth.getInstance().setPermInfo(permInfo);
+
+        boolean permCheckResult = true;
+        for(int i=0;i<requiredPerms.length;i++)
+        {
+            if(!Auth.getInstance().hasPerm(requiredPerms[i]))
+            {
+                permCheckResult = false;
+                break;
+            }
+        }
+
+        if(permCheckResult){
             return true;
         }else{
-            String[] requiredPerms  = annotation.value();
-            boolean silence = annotation.silence();
-            PermInfo permInfo = remoteService.passportVerifyAndGet(token);
-            Auth.getInstance().setPermInfo(permInfo);
-            if(requiredPerms.length == 0){
-                if(Auth.id() > 0 )
-                {
-                    return true;
-                }else if(silence) {
-                    return true;
-                }else{
-                    throw AuthorizeException.loginRequired();
-                }
-            }else{
-                boolean permCheckResult = true;
-                for(int i=0;i<requiredPerms.length;i++)
-                {
-                    if(!Auth.getInstance().hasPerm(requiredPerms[i]))
-                    {
-                        permCheckResult = false;
-                        break;
-                    }
-                }
-                if(permCheckResult){
-                    return true;
-                }else if(silence){
-                   return true;
-                }else{
-                    throw AuthorizeException.accessDeny();
-                }
-            }
+            throw AuthorizeException.accessDeny();
         }
     }
 
