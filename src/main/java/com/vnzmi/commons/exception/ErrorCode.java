@@ -18,6 +18,7 @@ public  class ErrorCode {
      */
     public final static int  LOGIN_REQUIRED = 600401;
     public final static String  LOGIN_REQUIRED_MESSAGE = "Login required";
+
     /**
      * 数据验证失败
      */
