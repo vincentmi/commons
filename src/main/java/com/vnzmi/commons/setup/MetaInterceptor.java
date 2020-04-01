@@ -37,7 +37,7 @@ public class MetaInterceptor implements HandlerInterceptor {
 
     private String getClientIpAddress(HttpServletRequest request)
     {
-        String ip=request.getHeader(" X-Original-Forwarded-For");
+        String ip=request.getHeader("X-Original-Forwarded-For");
 
         if(ip==null || ip.length()==0 || "unknown".equalsIgnoreCase(ip)){
             ip=request.getHeader("X-Forwarded-For");
@@ -58,6 +58,15 @@ public class MetaInterceptor implements HandlerInterceptor {
             if("0:0:0:0:0:0:0:1".equals(ip))
             {
                 ip = "127.0.0.1";
+            }
+        }
+
+        if(ip!=null)
+        {
+            int pos = ip.indexOf(',');
+            if(pos!=-1)
+            {
+                ip = ip.substring(0,pos);
             }
         }
 
