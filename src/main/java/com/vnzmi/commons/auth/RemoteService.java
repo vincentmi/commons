@@ -22,7 +22,7 @@ public class RemoteService {
     public interface AuthorizeClient {
         @RequestMapping(
                 method = RequestMethod.GET,
-                path = "/api/v1/auth/verify-get",
+                path = "/internal/v1/auth/verify-get",
                 produces = "application/json; charset=UTF-8"
         )
         PermInfo verifyAndGet(
@@ -34,7 +34,7 @@ public class RemoteService {
     public interface PassportClient {
         @RequestMapping(
                 method = RequestMethod.GET ,
-                path = "/api/v1/auth/verify-get",
+                path = "/internal/v1/auth/verify-get",
                 produces = "application/json; charset=UTF-8"
         )
         PermInfo verifyAndGet(

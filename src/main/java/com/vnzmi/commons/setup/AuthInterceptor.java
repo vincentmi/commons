@@ -125,8 +125,16 @@ public class AuthInterceptor implements HandlerInterceptor {
                 throw  AuthorizeException.loginRequired();
             }
         }
+        PermInfo permInfo = new PermInfo();
+        try {
+            permInfo = remoteService.passportVerifyAndGet(token);
+        }catch (Exception e){
+            if(!silence)
+            {
+                throw e;
+            }
+        }
 
-        PermInfo permInfo = remoteService.passportVerifyAndGet(token);
         Auth.getInstance().setPermInfo(permInfo);
 
         boolean permCheckResult = true;
