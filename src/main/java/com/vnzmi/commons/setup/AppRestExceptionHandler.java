@@ -20,6 +20,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
 
 @RestController
@@ -43,7 +44,7 @@ public class AppRestExceptionHandler extends ResponseEntityExceptionHandler {
 
     public ApiResponse buildValidatingExceptionResponse(ValidationException e) {
         logException(e);
-        return ApiResponse.build(e.getCode(), e.getMessage(), e.getData());
+        return ApiResponse.build(e.getCode(), e.getMessage() + "," +e.getFirstMessage(), e.getData());
     }
 
     @ExceptionHandler(DecodeException.class)

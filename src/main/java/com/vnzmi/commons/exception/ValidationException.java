@@ -4,21 +4,32 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.List;
 
 public class ValidationException extends BusinessException {
+
+    private String firstMessage;
 
     public ValidationException()
     {
         setCode(ErrorCode.VALIDATE_FAIL);
         setMessage(ErrorCode.VALIDATE_FAIL_MESSAGE);
-        setData(new Hashtable<String,String>());
+        setData(new HashMap<String,String>());
+    }
+
+    public String getFirstMessage()
+    {
+        return firstMessage == null ? "" : firstMessage;
     }
 
     public ValidationException message(String field , String msg)
     {
-        Hashtable<String,String> data1 = (Hashtable<String,String>) data;
+        if(firstMessage == null)
+        {
+            firstMessage = msg;
+        }
+        HashMap<String,String> data1 = (HashMap<String,String>) data;
         String oldMsg  = data1.get(field);
         if(oldMsg == null)
         {
@@ -35,8 +46,6 @@ public class ValidationException extends BusinessException {
     }
 
 
-
-
     public static void  check(BindingResult result) throws ValidationException
     {
         ValidationException err = buildFromBindingResult(result);
@@ -50,7 +59,7 @@ public class ValidationException extends BusinessException {
 
     public static ValidationException buildFromBindingResult(BindingResult result)
     {
-        ValidationException errException = null;
+        ValidationException errException = new ValidationException();
         if(result.hasErrors())
         {
             List<ObjectError> errors = result.getAllErrors();
@@ -58,17 +67,13 @@ public class ValidationException extends BusinessException {
             ObjectError error ;
             FieldError fieldError ;
 
-            Hashtable<String,String>  errorDetail  = new Hashtable<>();
+            HashMap<String,String>  errorDetail  = new HashMap<String,String>();
 
             for(int i = 0 ;i<fieldErrorList.size();i++)
             {
                 fieldError = fieldErrorList.get(i);
-                errorDetail.put(fieldError.getField(), fieldError.getDefaultMessage());
-
+                errException.message(fieldError.getField() , fieldError.getDefaultMessage());
             }
-
-            errException = new ValidationException();
-            errException.setData(errorDetail);
         }
         return errException;
 
