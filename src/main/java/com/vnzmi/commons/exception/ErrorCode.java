@@ -11,31 +11,31 @@ public  class ErrorCode {
      * 权限检查失败
      */
     public final static int  ACCESS_DENY = 600403;
-    public final static String  ACCESS_DENY_MESSAGE = "Access deny";
+    public final static String  ACCESS_DENY_MESSAGE = "权限检查失败.";
 
     /**
      * 需要登录
      */
     public final static int  LOGIN_REQUIRED = 600401;
-    public final static String  LOGIN_REQUIRED_MESSAGE = "Login required";
+    public final static String  LOGIN_REQUIRED_MESSAGE = "需要登录.";
 
     /**
      * 数据验证失败
      */
     public final static int VALIDATE_FAIL = 600412;
-    public final static String VALIDATE_FAIL_MESSAGE = "Data validation failed. Please check the data";
+    public final static String VALIDATE_FAIL_MESSAGE = "数据验证失败,请检查.";
 
     /**
      * 实体未找到
      */
     public static int ENTITY_NOT_FOUND = 600404;
-    public static String  ENTITY_NOT_FOUND_MESSAGE = "Entity not found.";
+    public static String  ENTITY_NOT_FOUND_MESSAGE = "找不到你要查看的数据.";
 
     /**
      * RPC 返回数据内容错误
      */
     public static int BAD_RPC_REQUEST = 600400;
-    public static String BAD_RPC_REQUEST_MESSAGE = "Bad RPC request";
+    public static String BAD_RPC_REQUEST_MESSAGE = "远程调用失败.";
 
 
 }

@@ -4,7 +4,7 @@
   <groupId>com.vnzmi.commons</groupId>
   <artifactId>micro-service-utils</artifactId>
   <packaging>jar</packaging>
-  <version>1.0.11</version>
+  <version>1.0.12</version>
   <name>micro-service-utils</name>
   <url>http://vnzmi.com</url>
 
