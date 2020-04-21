@@ -44,7 +44,7 @@ public class AppRestExceptionHandler extends ResponseEntityExceptionHandler {
 
     public ApiResponse buildValidatingExceptionResponse(ValidationException e) {
         logException(e);
-        return ApiResponse.build(e.getCode(), e.getMessage() + "," +e.getFirstMessage(), e.getData());
+        return ApiResponse.build(e.getCode(), e.getMessage() + "(" +e.getFirstMessage()+")", e.getData());
     }
 
     @ExceptionHandler(DecodeException.class)
