@@ -32,6 +32,12 @@ public  class ErrorCode {
     public static String  ENTITY_NOT_FOUND_MESSAGE = "找不到你要查看的数据.";
 
     /**
+     * 乐观锁获取失败
+     */
+    public static int ENTITY_VERSION_CHANGED = 600409;
+    public static String  ENTITY_VERSION_CHANGED_MESSAGE = "找不到你要查看的数据.";
+
+    /**
      * RPC 返回数据内容错误
      */
     public static int BAD_RPC_REQUEST = 600400;

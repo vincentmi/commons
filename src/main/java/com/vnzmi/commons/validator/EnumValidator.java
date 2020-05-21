@@ -3,6 +3,7 @@ package com.vnzmi.commons.validator;
 import javax.validation.ConstraintValidatorContext;
 import java.util.HashSet;
 
+
 public class EnumValidator implements javax.validation.ConstraintValidator<Enum, Object> {
 
     private HashSet<String> valueSet = new HashSet<>();
@@ -31,16 +32,30 @@ public class EnumValidator implements javax.validation.ConstraintValidator<Enum,
     @Override
     public boolean isValid(Object val, ConstraintValidatorContext constraintValidatorContext) {
         if (val == null && this.nullable == false) {
+            setMessage(constraintValidatorContext);
             return false;
         }
 
+        boolean result = valueSet.contains(val.toString());
+
+        if(result)
+        {
+            return true;
+        }else{
+            setMessage(constraintValidatorContext);
+            return false;
+        }
+    }
+
+    private void setMessage(ConstraintValidatorContext constraintValidatorContext)
+    {
         constraintValidatorContext.disableDefaultConstraintViolation();
         String msg = constraintValidatorContext
                 .getDefaultConstraintMessageTemplate()
-                .replaceAll("\\{valueSet\\}",valueString);
-        constraintValidatorContext.buildConstraintViolationWithTemplate(msg).addConstraintViolation();
+                .replaceAll("\\{values\\}",valueString);
 
-
-        return valueSet.contains(val.toString());
+        constraintValidatorContext
+                .buildConstraintViolationWithTemplate(msg)
+                .addConstraintViolation();
     }
 }

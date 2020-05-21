@@ -17,7 +17,7 @@ import java.lang.annotation.Target;
 @Constraint(validatedBy = { EnumValidator.class })
 public @interface Enum {
     String[] value();
-    String message() default "无效的取值,取值应该为{valueSet}";
+    String message() default "无效的取值,取值应该为{values}";
     boolean nullable() default  false ;
     Class<?>[] groups() default { };
     Class<? extends Payload>[] payload() default {};

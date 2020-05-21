@@ -19,6 +19,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.OptimisticLockException;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
@@ -33,6 +34,8 @@ public class AppRestExceptionHandler extends ResponseEntityExceptionHandler {
         logException(e);
         return ApiResponse.build(e.getCode(), e.getMessage(), e.getData());
     }
+
+
 
 
     @ExceptionHandler(ValidationException.class)
@@ -88,6 +91,14 @@ public class AppRestExceptionHandler extends ResponseEntityExceptionHandler {
     public ApiResponse entityNotFound(HttpServletRequest req, EntityNotFoundException e) {
         logException(e);
         return ApiResponse.build(ErrorCode.ENTITY_NOT_FOUND, ErrorCode.ENTITY_NOT_FOUND_MESSAGE, null);
+    }
+
+    @ExceptionHandler(OptimisticLockException.class)
+    @ResponseBody
+    public ApiResponse entityVersionChanged(HttpServletRequest req , OptimisticLockException e)
+    {
+        logException(e);
+        return ApiResponse.build(ErrorCode.ENTITY_VERSION_CHANGED  ,ErrorCode.ENTITY_NOT_FOUND_MESSAGE,null);
     }
 
 
