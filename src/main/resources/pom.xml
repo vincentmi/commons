@@ -23,7 +23,7 @@
         <guava.version>28.0-jre</guava.version>
         <jedis.version>3.1.0</jedis.version>
         <druid.version>1.1.17</druid.version>
-        <mysql.version>5.1.35</mysql.version>
+        <mysql.version>8.0.28</mysql.version>
         <feign.http.version>10.9</feign.http.version>
         <spring.pagehelper.version>1.2.13</spring.pagehelper.version>
         <spring-cloud.version>Hoxton.SR3</spring-cloud.version>
